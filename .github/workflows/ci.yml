@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Devcontainer
+      run: docker-compose up -d
+    - name: Compile and run HelloWorld project in container
+      run: | 
+        docker-compose exec -T kotlin-devcontainer bash -c "
+        time
+        kotlinc HelloWorld.kt -include-runtime -d HelloWorld.jar &&
+        kotlin HelloWorld.jar
+        "
