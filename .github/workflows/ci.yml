@@ -13,9 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup Devcontainer
-      run: bin/start_container.sh
+      run: docker-compose up -d
     - name: Compile and run HelloWorld project in container
       run: | 
-        bin/hop_in.sh
+        docker-compose exec kotlin-devcontainer bash -l
         kotlinc HelloWorld.kt -include-runtime -d HelloWorld.jar
         kotlin HelloWorld.jar
